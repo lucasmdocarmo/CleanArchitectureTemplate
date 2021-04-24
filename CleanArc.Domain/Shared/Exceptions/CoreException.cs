@@ -5,19 +5,18 @@ using System.Text;
 namespace CleanArc.Domain.Shared.Exceptions
 {
     [Serializable]
-    public abstract class CoreException : Exception
+    public class CoreException : Exception
     {
-        public abstract string Key { get; }
-        public abstract override string Message { get; }
+        public override string Message { get; }
 
-        protected CoreException() : base()
+        public CoreException() : base()
         {
         }
-        protected CoreException(string message) : base(message)
+        public CoreException(string message) : base(message)
         {
         }
 
-        protected CoreException(string message, Exception innerException) : base(message, innerException)
+        public CoreException(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

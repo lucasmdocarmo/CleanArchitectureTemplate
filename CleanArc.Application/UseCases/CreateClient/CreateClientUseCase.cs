@@ -3,6 +3,8 @@ using CleanArc.Application.Contracts.UseCases.Interactors;
 using CleanArc.Application.UseCases.CreateClient.Boundaries;
 using CleanArc.Application.UseCases.CreateClient.Ports;
 using CleanArc.Domain.Entities;
+using CleanArc.Domain.Shared.Exceptions;
+using CleanArch.Infrastructure.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,11 +16,13 @@ namespace CleanArc.Application.UseCases.CreateClient
     {
         private readonly IMapper _mapper;
         private readonly ICreateClientPort _port;
+        private readonly IClientRepository _repository;
 
-        public CreateClientUseCase(IMapper mapper, ICreateClientPort port)
+        public CreateClientUseCase(IMapper mapper, ICreateClientPort port, IClientRepository repository)
         {
             _mapper = mapper;
             _port = port;
+            _repository = repository;
         }
 
         public async ValueTask ExecuteTaskAsync(CreateClientInput input)
@@ -30,14 +34,19 @@ namespace CleanArc.Application.UseCases.CreateClient
                 _port.ValidationErrors(entity.Notifications);
                 return;
             }
-
-            _port.NoContent();
-
             try
             {
+                var output = await _repository.Add(entity);
 
+                if(!output)
+                {
+                    _port.UnprocessableEntity("An Error Occour while adding the client.");
+                    return;
+                }
+
+                _port.NoContent();
             }
-            catch (Exception ex)
+            catch (CoreException ex)
             {
                 _port.UnprocessableEntity(ex.Message);
             }

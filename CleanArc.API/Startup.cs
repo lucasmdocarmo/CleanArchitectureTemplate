@@ -1,6 +1,8 @@
 using CleanArc.API.Configuration;
 using CleanArc.Application.Profiles;
 using CleanArc.Application.Shared.Configuration;
+using CleanArch.Infrastructure.Configuration;
+using CleanArch.Infrastructure.Context;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -25,6 +27,7 @@ namespace CleanArc.API
             services.AddRegisterServices();
             services.AddRegisterUseCases();
             services.AddRegisterValidators();
+            services.AddRepositories(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddRegisteredMappers();
             services.AddSwagger();
@@ -35,6 +38,7 @@ namespace CleanArc.API
             if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
 
             app.UsePathBase("/clean-archi-api");
+            app.EnsureMigrationOfContext();
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArc.API v1"));
             app.UseRequestLocalization();
