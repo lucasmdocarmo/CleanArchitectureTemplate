@@ -9,6 +9,8 @@
   - DDD Principles (Value Objects, Entity, Aggregate Root, Domain Design)
   - Entity Framework Core ( Repository, Relationships, Seed Work, Migration/EnsureCreated DB)
   - .NET Stuff ( Swagger, Loggin, Auth, Extensions, Versioning, Data Annotations...)
+  - Identiy Server
   - Docker Support
   - Tests
-  ...
+  - 
+> Developed by Lucas MDC
