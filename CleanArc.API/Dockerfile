@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["CleanArc.API/CleanArc.API.csproj", "CleanArc.API/"]
+COPY ["CleanArc.Application/CleanArc.Application.csproj", "CleanArc.Application/"]
+COPY ["CleanArc.Domain/CleanArc.Domain.csproj", "CleanArc.Domain/"]
 RUN dotnet restore "CleanArc.API/CleanArc.API.csproj"
 COPY . .
 WORKDIR "/src/CleanArc.API"

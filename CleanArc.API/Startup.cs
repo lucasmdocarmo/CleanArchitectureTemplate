@@ -1,16 +1,11 @@
+using CleanArc.API.Configuration;
+using CleanArc.Application.Profiles;
+using CleanArc.Application.Shared.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CleanArc.API
 {
@@ -23,33 +18,30 @@ namespace CleanArc.API
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CleanArc.API", Version = "v1" });
-            });
+            services.AddControllersConfiguration();
+            services.AddCustomVersioning();
+            services.AddRegisterServices();
+            services.AddRegisterUseCases();
+            services.AddRegisterValidators();
+            services.AddAutoMapper(typeof(Startup));
+            services.AddRegisteredMappers();
+            services.AddSwagger();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArc.API v1"));
-            }
+            if (env.IsDevelopment()) { app.UseDeveloperExceptionPage(); }
 
+            app.UsePathBase("/clean-archi-api");
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CleanArc.API v1"));
+            app.UseRequestLocalization();
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseHsts();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
