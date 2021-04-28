@@ -20,4 +20,8 @@
     <ProjectReference Include="..\CleanArch.Infrastructure\CleanArch.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\V1\UpdateProfession\" />
+  </ItemGroup>
+
 </Project>

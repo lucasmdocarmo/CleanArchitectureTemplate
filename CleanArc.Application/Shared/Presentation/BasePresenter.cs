@@ -23,6 +23,11 @@ namespace CleanArc.Application.Shared.Presentation
             ViewModelResult = new UnprocessableEntityObjectResult(errorMessage);
         }
 
+        public void ValidationError(Notification notification)
+        {
+            ViewModelResult = new PreconditionFailedModelError(notification);
+        }
+
         public void ValidationErrors(IEnumerable<Notification> notifications)
         {
             ViewModelResult = new PreconditionFailedModelError(notifications);

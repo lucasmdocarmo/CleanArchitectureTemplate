@@ -1,4 +1,5 @@
 using CleanArc.API.Configuration;
+using CleanArc.Application.Configuration;
 using CleanArc.Application.Profiles;
 using CleanArc.Application.Shared.Configuration;
 using CleanArch.Infrastructure.Configuration;

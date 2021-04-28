@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CleanArc.Application.Contracts.Ports.Models
 {
-    public interface INoContentPort : IBasePresenter
+    public interface INoContentPort
     {
         void NoContent();
     }

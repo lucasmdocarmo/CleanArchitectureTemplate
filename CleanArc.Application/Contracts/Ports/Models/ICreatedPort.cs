@@ -5,9 +5,8 @@ using System.Text;
 
 namespace CleanArc.Application.Contracts.Ports.Models
 {
-    public interface ICreatedPort<in TUseCaseOutput> where TUseCaseOutput : IUseCaseOutput, IBasePresenter
+    public interface ICreatedPort<in TUseCaseOutput> where TUseCaseOutput : IUseCaseOutput?, new ()
     {
         void Created(TUseCaseOutput output);
-        void Created(TUseCaseOutput output, string message);
     }
 }

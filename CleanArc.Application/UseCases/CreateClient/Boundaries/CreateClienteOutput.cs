@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CleanArc.Application.UseCases.CreateClient.Boundaries
 {
-    public class CreateClientInput : IUseCaseInput
+    public class CreateClienteOutput : IUseCaseOutput
     {
         public string Name { get; set; }
         public string Email { get; set; }

@@ -5,8 +5,9 @@ using System.Text;
 
 namespace CleanArc.Application.Contracts.Ports.Models
 {
-    public interface IPreconditionPort : IBasePresenter
+    public interface IPreconditionPort
     {
         void ValidationErrors(IEnumerable<Notification> notifications);
+        void ValidationError(Notification notification);
     }
 }

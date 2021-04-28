@@ -14,6 +14,8 @@ namespace CleanArch.Infrastructure.Context
             builder.HasKey(c => c.Id);
             builder.Property(x => x.Name).HasMaxLength(250).HasColumnType("varchar(250)").IsRequired();
             builder.Property(x => x.Email).HasMaxLength(250).HasColumnType("varchar(250)").IsRequired();
+            builder.Property(x => x.Profession).HasMaxLength(250).HasColumnType("varchar(250)").IsRequired();
+            builder.Property(x => x.Type).HasColumnType("int").IsRequired();
 
             builder.ToTable("Client");
         }

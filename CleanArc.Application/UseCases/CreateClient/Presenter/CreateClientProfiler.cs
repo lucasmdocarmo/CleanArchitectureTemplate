@@ -12,6 +12,7 @@ namespace CleanArc.Application.UseCases.CreateClient.Presenter
         public CreateClientProfiler()
         {
             CreateMap<Client, CreateClientInput>().ReverseMap();
+            CreateMap<Client, CreateClienteOutput>().ReverseMap();
         }
     }
 }

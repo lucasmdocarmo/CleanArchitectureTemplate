@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArc.Application.Contracts.UseCases.Interactors;
+using CleanArc.Application.Shared.Messages;
 using CleanArc.Application.UseCases.CreateClient.Boundaries;
 using CleanArc.Application.UseCases.CreateClient.Ports;
 using CleanArc.Domain.Entities;
@@ -36,15 +37,13 @@ namespace CleanArc.Application.UseCases.CreateClient
             }
             try
             {
-                var output = await _repository.Add(entity);
-
-                if(!output)
+                var result =  await _repository.Add(entity);
+                if(!result)
                 {
-                    _port.UnprocessableEntity("An Error Occour while adding the client.");
-                    return;
+                    _port.UnprocessableEntity(ApplicationMessages.Created_Error);
                 }
 
-                _port.NoContent();
+                _port.Created(_mapper.Map<CreateClienteOutput>(entity));
             }
             catch (CoreException ex)
             {

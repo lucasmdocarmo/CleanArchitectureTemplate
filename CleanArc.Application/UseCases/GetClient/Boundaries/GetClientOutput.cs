@@ -4,9 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArc.Application.UseCases.CreateClient.Boundaries
+namespace CleanArc.Application.UseCases.GetClient.Boundaries
 {
-    public class CreateClientInput : IUseCaseInput
+    public class GetClientOutput : IUseCaseOutput
     {
         public string Name { get; set; }
         public string Email { get; set; }

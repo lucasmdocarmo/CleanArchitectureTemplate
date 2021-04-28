@@ -4,9 +4,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CleanArc.Application.UseCases.CreateClient.Boundaries
+namespace CleanArc.Application.UseCases.SearchByProfession.Boundaries
 {
-    public class CreateClientInput : IUseCaseInput
+    public class SearchByProfessionOutput :IUseCaseOutput
+    {
+        public IEnumerable<SearchResult> ResultList { get; set; }
+        public SearchByProfessionOutput()
+        {
+            ResultList = new List<SearchResult>();
+        }
+    }
+    public class SearchResult
     {
         public string Name { get; set; }
         public string Email { get; set; }

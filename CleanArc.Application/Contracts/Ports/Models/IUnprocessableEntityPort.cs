@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CleanArc.Application.Contracts.Ports.Models
 {
-    public interface IUnprocessableEntityPort : IBasePresenter
+    public interface IUnprocessableEntityPort
     {
         void UnprocessableEntity(string errorMessage);
     }

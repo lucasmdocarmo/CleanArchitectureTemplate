@@ -1,4 +1,5 @@
 ﻿using CleanArc.Domain.Shared.Entity;
+using CleanArc.Domain.Shared.ValueObjects;
 using Flunt.Validations;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,25 @@ namespace CleanArc.Domain.Entities
     {
         public string Name { get; private set; }
         public string Email { get; private set; }
-        public Client(string name, string email)
+        public EClientType Type { get; private set; }
+        public string Profession { get; private set; }
+
+        public Client(string name, string email, EClientType type, string profession)
         {
             Name = name;
             Email = email;
+            Type = type;
+            Profession = profession;
             AddNotifications(new ClientValidation(this));
+        }
+
+        public void UpdateProfession(string Profession)
+        {
+            this.Profession = Profession;
+        }
+        public void UpdateClientType(EClientType Type)
+        {
+            this.Type = Type;
         }
     }
     internal class ClientValidation : Contract<Client>
@@ -22,8 +37,10 @@ namespace CleanArc.Domain.Entities
         public ClientValidation(Client client)
         {
             Requires()
-                .IsNotNullOrWhiteSpace(client.Name, "Name", "Name is empty")
-                .IsEmail(client.Email, nameof(client.Email), "Email Invalid");
+                .IsNotNullOrWhiteSpace(client.Name, "Name", "Name is Required")
+                .IsEmail(client.Email, nameof(client.Email), "Email Invalid")
+                .IsNotNullOrWhiteSpace(client.Profession,nameof(client.Profession),"Profession is Required")
+                .IsTrue(Enum.IsDefined(typeof(EClientType),client.Type),nameof(client.Type),"Type is not Valid");
         }
     }
 }
