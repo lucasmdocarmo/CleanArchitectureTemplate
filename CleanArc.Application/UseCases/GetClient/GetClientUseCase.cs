@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using CleanArc.Application.Contracts.UseCases.Interactors;
+using CleanArc.Application.Shared.Messages;
 using CleanArc.Application.UseCases.GetClient.Boundaries;
 using CleanArc.Application.UseCases.GetClient.Ports;
+using CleanArc.Domain.Shared.Exceptions;
 using CleanArch.Infrastructure.Contracts;
+using Flunt.Notifications;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,9 +26,29 @@ namespace CleanArc.Application.UseCases.GetClient
             _repository = repository;
         }
 
-        public ValueTask ExecuteTaskAsync(GetClientInput input)
+        public async ValueTask ExecuteTaskAsync(GetClientInput input)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(input.Id.ToString()) || input.Id == null)
+            {
+                _port.ValidationError("Id Invalid", nameof(input.Id));
+                return;
+            }
+
+            try
+            {
+                var entity = await _repository.GetById(input.Id).ConfigureAwait(true);
+                if (entity == null)
+                {
+                    _port.ValidationError("Client Not Found", nameof(input.Id));
+                    return;
+                }
+
+                _port.Success(_mapper.Map<GetClientOutput>(entity));
+            }
+            catch (CoreException ex)
+            {
+                _port.UnprocessableEntity(ex.Message);
+            }
         }
     }
 }

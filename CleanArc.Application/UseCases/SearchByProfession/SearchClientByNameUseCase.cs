@@ -7,6 +7,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
+using Flunt.Notifications;
+using CleanArc.Domain.Shared.Exceptions;
+using CleanArc.Application.UseCases.SearchByProfession.Boundaries;
+using CleanArc.Domain.Contracts.Entities;
+using CleanArc.Domain.Entities;
 
 namespace CleanArc.Application.UseCases.SearchByProfession
 {
@@ -23,9 +29,29 @@ namespace CleanArc.Application.UseCases.SearchByProfession
             _repository = repository;
         }
 
-        public ValueTask ExecuteTaskAsync(SearchByProfessionInput input)
+        public async ValueTask ExecuteTaskAsync(SearchByProfessionInput input)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                var entityquery = await _repository.GetAll().ConfigureAwait(true);
+
+                var reusult = entityquery.Where(x => x.Profession.Contains(input.Profession));
+                if (reusult == null)
+                {
+                    _port.ValidationError("Client Not Found", nameof(input.Profession));
+                    return;
+                }
+
+                var output = new SearchByProfessionOutput();
+                output.Clients.AddRange(reusult);
+              
+                _port.Success(output);
+            }
+            catch (CoreException ex)
+            {
+                _port.UnprocessableEntity(ex.Message);
+            }
         }
     }
 }

@@ -30,9 +30,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UseCases\UpdateProfession\" />
-    <Folder Include="UseCases\UpdateClient\Ports\" />
-  </ItemGroup>
-
 </Project>

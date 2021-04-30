@@ -8,6 +8,6 @@ namespace CleanArc.Application.Contracts.Ports.Models
     public interface IPreconditionPort
     {
         void ValidationErrors(IEnumerable<Notification> notifications);
-        void ValidationError(Notification notification);
+        void ValidationError(string notification, string key);
     }
 }

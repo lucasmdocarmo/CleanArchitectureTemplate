@@ -15,12 +15,11 @@ namespace CleanArc.Application.Shared.Configuration
     {
         public static IServiceCollection AddRegisterUseCases(this IServiceCollection services)
         {
-             GetExecutingAssembly()
-            .GetTypes()
-            .Where(item => item.GetInterfaces()
-            .Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IUseCase<>)) && !item.IsAbstract && !item.IsInterface)
-            .ToList()
-            .ForEach(assignedTypes =>
+            GetExecutingAssembly().GetTypes().
+            Where(item => item.GetInterfaces().
+            Where(i => i.IsGenericType).Any(i => i.GetGenericTypeDefinition() == typeof(IUseCase<>)) && !item.IsAbstract && !item.IsInterface).
+            ToList().
+            ForEach(assignedTypes =>
             {
                 var serviceType = assignedTypes.GetInterfaces().First(i => i.GetGenericTypeDefinition() == typeof(IUseCase<>));
                 services.AddScoped(serviceType, assignedTypes);

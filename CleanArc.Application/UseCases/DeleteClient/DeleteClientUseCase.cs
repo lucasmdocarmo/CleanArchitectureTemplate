@@ -30,14 +30,14 @@ namespace CleanArc.Application.UseCases.DeleteClient
         {
             if(string.IsNullOrWhiteSpace(input.Id.ToString()) || input.Id == null)
             {
-                _port.ValidationError(new Notification(nameof(input.Id),"Id Invalid"));
+                _port.ValidationError("Id Invalid", nameof(input.Id));
                 return;
             }
 
             var entity = await _repository.GetById(input.Id).ConfigureAwait(true);
             if(entity == null)
             {
-                _port.ValidationError(new Notification(nameof(input.Id), "Client Not Found"));
+                _port.ValidationError("Client Not Found", nameof(input.Id));
                 return;
             }
             try

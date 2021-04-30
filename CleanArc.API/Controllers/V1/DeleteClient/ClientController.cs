@@ -29,17 +29,17 @@ namespace CleanArc.API.Controllers.V1.DeleteClient
         }
 
         /// <summary>
-        /// Create a New Client
+        /// Delete Client
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpDelete]
-        [Route("{id}/Delete")]
+        [Route("{id}")]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(Notification), StatusCodes.Status412PreconditionFailed)]
         [ProducesResponseType(typeof(string), StatusCodes.Status422UnprocessableEntity)]
-        public async Task<IActionResult> PostAsync([FromRoute][Bind][Required] Guid id)
+        public async Task<IActionResult> DeleteAsync([FromRoute][Bind][Required] Guid id)
         {
             if (!ModelState.IsValid)
             {

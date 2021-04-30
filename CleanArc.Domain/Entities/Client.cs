@@ -1,4 +1,5 @@
-﻿using CleanArc.Domain.Shared.Entity;
+﻿using CleanArc.Domain.Contracts.Entities;
+using CleanArc.Domain.Shared.Entity;
 using CleanArc.Domain.Shared.ValueObjects;
 using Flunt.Validations;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace CleanArc.Domain.Entities
 {
-    public sealed class Client : BaseEntity
+    public sealed class Client : BaseEntity, IClient
     {
         public string Name { get; private set; }
         public string Email { get; private set; }
@@ -22,7 +23,16 @@ namespace CleanArc.Domain.Entities
             Profession = profession;
             AddNotifications(new ClientValidation(this));
         }
+        public Client UpdateClient(Client client)
+        {
+            this.Name = client.Name;
+            this.Email = client.Email;
+            this.Type = client.Type;
+            this.Profession = client.Profession;
+            AddNotifications(new ClientValidation(this));
 
+            return client;
+        }
         public void UpdateProfession(string Profession)
         {
             this.Profession = Profession;
