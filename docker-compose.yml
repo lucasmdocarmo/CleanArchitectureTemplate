@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  cleanarc.api:
+    image: ${DOCKER_REGISTRY-}cleanarcapi
+    build:
+      context: .
+      dockerfile: CleanArc.API/Dockerfile
