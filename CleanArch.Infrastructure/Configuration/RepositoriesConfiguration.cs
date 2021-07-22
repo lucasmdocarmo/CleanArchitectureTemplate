@@ -19,7 +19,15 @@ namespace CleanArch.Infrastructure.Configuration
     {
         internal static IServiceCollection AddRepositories(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<APIContext>(db => db.UseSqlServer(configuration.GetConnectionString("AppConnString")));
+            var server = configuration["DbServer"] ?? "localhost";
+            var port = configuration["DbPort"] ?? "1433"; // Default SQL Server port
+            var user = configuration["DbUser"] ?? "SA";
+            var password = configuration["Password"] ?? "clean#2021";
+            var database = configuration["Database"] ?? "CleanArchi.db";
+
+            string connectionString = $"Server={server}, {port};Initial Catalog={database};User ID={user};Password={password}";
+
+            services.AddDbContext<APIContext>(db => db.UseSqlServer(connectionString));
             services.AddScoped<APIContext>();
             services.AddScoped<IUnitOfWork, APIContext>();
             services.AddScoped(typeof(IRepository<,>), typeof(BaseRepository<,>));

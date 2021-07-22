@@ -28,10 +28,10 @@ namespace CleanArc.API
             services.AddRegisterServices();
             services.AddRegisterUseCases();
             services.AddRegisterValidators();
-            services.AddRepositories(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddRegisteredMappers();
             services.AddSwagger();
+            services.AddRepositories(Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

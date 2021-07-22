@@ -6,3 +6,24 @@ services:
     build:
       context: .
       dockerfile: CleanArc.API/Dockerfile
+    environment:
+      DbServer: "mssql-server"
+      DbPort: "1433"
+      DbUser: "SA"
+      Password: "clean#2021"
+      Database: "CleanArchi.db"
+    ports: 
+      - "8099:83"
+    depends_on:
+      - mssql-server
+
+  mssql-server:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    environment:
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "clean#2021"
+      MSSQL_PID: Express
+    ports:
+      - "1433:1433"
+    volumes:
+      - C:\temp\sqlserver:/var/opt/mssql/data
